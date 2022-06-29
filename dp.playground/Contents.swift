@@ -9,16 +9,18 @@ tree.append([9, 8, 0, 3])
 func maxPathSum(for tree: xmasTree) -> Int {
     guard !tree.isEmpty else { return 0 }
 
-    let height = tree.count
+    let treeHeight = tree.count
 
-    guard height > 1 else { return tree[0][0] }
+    guard treeHeight > 1 else { return tree[0][0] }
 
-    var (tree, levelIndex) = (tree, height - 2)
+    var (tree, levelIndex) = (tree, treeHeight - 2)
 
     while levelIndex >= 0 {
         let level = tree[levelIndex]
         for (i, x) in level.enumerated() {
-            tree[levelIndex][i] = max(x + tree[levelIndex + 1][i], x + tree[levelIndex + 1][i + 1])
+            let left = x + tree[levelIndex + 1][i]
+            let right = x + tree[levelIndex + 1][i + 1]
+            tree[levelIndex][i] = max(left, right)
         }
         levelIndex -= 1
     }
